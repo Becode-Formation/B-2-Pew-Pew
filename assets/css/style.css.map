@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,IAAK;EACD,MAAM,EAAE,IAAI;EACZ,UAAU,EAAE,MAAM;;ACFtB,MAAO;EACH,MAAM,EAAE,eAAe;EACvB,UAAU,EAAE,IAAI;;AAGpB,MAAO;EACH,OAAO,EAAE,IAAI",
+"sources": ["../sass/base/_bases.scss","../sass/component/_canvas.scss"],
+"names": [],
+"file": "style.css"
+}

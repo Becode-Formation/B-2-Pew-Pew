@@ -1,0 +1,12 @@
+body {
+  margin: auto;
+  text-align: center; }
+
+canvas {
+  border: 1px solid black;
+  margin-top: 10vh; }
+
+.image {
+  display: none; }
+
+/*# sourceMappingURL=style.css.map */
