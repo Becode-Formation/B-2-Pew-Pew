@@ -1,6 +1,8 @@
 //Canvas
 const c = document.getElementById("canvas")
 const ctx = c.getContext("2d")
+//bg
+
 //Canon
 const canon = document.getElementById("canon")
 let canonX = 400
@@ -18,6 +20,9 @@ const hTarget = parseInt(target.getAttribute("height"))
 let targetX = 300
 let targetY = 20
 
+//Is Collision ?
+let collision = false
+
 
 //Moving Canon
 const KEY = document.addEventListener("keydown", () => {
@@ -34,6 +39,7 @@ const KEY = document.addEventListener("keydown", () => {
 
 //Missile
 const SPACEBAR = document.addEventListener("keydown", () => {
+    collision = false
     if(event.keyCode === 32) {
         missileX = canonX + 17
        missileY = canonY
@@ -44,42 +50,55 @@ const SPACEBAR = document.addEventListener("keydown", () => {
 //Target position
 let moveTarget = () => {
     ctx.clearRect( targetX, targetY, 91, 68)
-    let rdn = Math.round(Math.random() * (750 -50))
-    targetX = rdn
+    rdn = Math.round(Math.random() * (700 -50))
+    if(rdn <= 30){
+        rdn += 68
+        targetX = rdn
+    } else if(rdn >=680){
+        rdn -= 68
+        targetX = rdn 
+    }else {
+        rdn += 68
+        targetX = rdn
+    }
+   console.log(targetX)
     ctx.drawImage(target, targetX, targetY)
     //Box collision du target
-    ctx.fillStyle = "rgba(0, 0, 0, 0.6)"
-    ctx.fillRect(targetX, targetY, 91, 68)
+    // ctx.fillStyle = "rgba(0, 0, 0, 0.6)"
+    // ctx.fillRect(targetX, targetY, 91, 68)
 }
 
 let moveMissile = () => {    
-    if(missileY > -100) {
+    if(missileY > -100 && !collision) {
         requestAnimationFrame(moveMissile)
         ctx.clearRect(missileX, missileY, 35, 86)
-        missileY -= 10
+        missileY -= 20
         ctx.drawImage(missile, missileX, missileY)
         //box de collision du missile
-        ctx.fillRect(missileX, missileY, 35, 86)
+        // ctx.fillRect(missileX, missileY, 35, 86)
         ctx.drawImage(canon, canonX, canonY)
         getCollision(wMissile, missileX, missileY,wTarget, hTarget, targetX, targetY)        
+    } else {
+        ctx.clearRect(missileX, missileY-30, 35, 110)
     }
 }
-
+//(mX < tX) && (mX < (tX + tWidth)) && ((mX + mWidth) > tX) && (mY <= tY)
 //Collission Function & Destuct 
 let getCollision = (mWidth, mX, mY, tWidth, tHeight, tX, tY) => {
-    if((mY <= tY) && (mX < (tX + tWidth)) && mX > tX) {
-        console.log("collision")
-        ctx.clearRect(tX, tY, 100, 100)
-        
+    if((((mX < tX) && (mX + mWidth) > tX) ||
+            ((mX > tX) && (mX + mWidth) < (tX + tWidth)) ||
+            ((mX < (tX + tWidth)) && ((mX + mWidth) > (tX + tWidth)))) && (mY-35 <= tY)) {
+        moveTarget()
+        collision = true
     }
 }
 
-moveTarget()
 //Initialisation du jeu 
 let getInit = () => {
     //Canon
-    ctx.drawImage(canon, canonX, canonY);
-    moveTarget()
+    ctx.drawImage(canon, canonX, canonY)
+    ctx.drawImage(target, targetX, targetY)
+    
 }
-getInit()
+
 
