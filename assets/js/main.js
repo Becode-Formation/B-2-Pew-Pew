@@ -20,9 +20,12 @@ const hTarget = parseInt(target.getAttribute("height"))
 let targetX = 300
 let targetY = 20
 
+//counting point
+let point = 0
+ctx.font = "20px Arial"
+
 //Is Collision ?
 let collision = false
-
 
 //Moving Canon
 const KEY = document.addEventListener("keydown", () => {
@@ -62,6 +65,7 @@ let moveTarget = () => {
         targetX = rdn
     }
    console.log(targetX)
+   ctx.fillText(`Points : ${point}`, 10, 20)  
     ctx.drawImage(target, targetX, targetY)
     //Box collision du target
     // ctx.fillStyle = "rgba(0, 0, 0, 0.6)"
@@ -88,16 +92,20 @@ let getCollision = (mWidth, mX, mY, tWidth, tHeight, tX, tY) => {
     if((((mX < tX) && (mX + mWidth) > tX) ||
             ((mX > tX) && (mX + mWidth) < (tX + tWidth)) ||
             ((mX < (tX + tWidth)) && ((mX + mWidth) > (tX + tWidth)))) && (mY-35 <= tY)) {
-        moveTarget()
-        collision = true
+                point+= 1
+                ctx.clearRect(0, 0, 100, 30)
+                moveTarget()
+                collision = true
     }
 }
 
 //Initialisation du jeu 
 let getInit = () => {
     //Canon
+    ctx.drawImage(bg, 0, 0)
     ctx.drawImage(canon, canonX, canonY)
-    ctx.drawImage(target, targetX, targetY)
+    ctx.drawImage(target, targetX, targetY) 
+    ctx.fillText(`Points : ${point}`, 10, 20)   
     
 }
 
