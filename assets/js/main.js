@@ -3,6 +3,7 @@ const c = document.getElementById("canvas")
 const ctx = c.getContext("2d")
 //bg
 
+let move = false
 //Canon
 const canon = document.getElementById("canon")
 let canonX = 400
@@ -29,11 +30,11 @@ let collision = false
 
 //Moving Canon
 const KEY = document.addEventListener("keydown", () => {
-    if(event.keyCode ===39) {  //Si la touche correspond à arrow right
+    if(event.keyCode ===39 && move) {  //Si la touche correspond à arrow right
         ctx.clearRect(canonX, 390, 70, 66)
        canonX += 10
         ctx.drawImage(canon, canonX, canonY)
-    } else if(event.keyCode === 37){  // Si la touche correspond à arrow left
+    } else if(event.keyCode === 37 && move){  // Si la touche correspond à arrow left
         ctx.clearRect(canonX, 390, 70, 66)
         canonX -= 10
         ctx.drawImage(canon, canonX, canonY)
@@ -43,7 +44,7 @@ const KEY = document.addEventListener("keydown", () => {
 //Missile
 const SPACEBAR = document.addEventListener("keydown", () => {
     collision = false
-    if(event.keyCode === 32) {
+    if(event.keyCode === 32 && move) {
         missileX = canonX + 17
        missileY = canonY
        moveMissile()
@@ -92,21 +93,24 @@ let getCollision = (mWidth, mX, mY, tWidth, tHeight, tX, tY) => {
     if((((mX < tX) && (mX + mWidth) > tX) ||
             ((mX > tX) && (mX + mWidth) < (tX + tWidth)) ||
             ((mX < (tX + tWidth)) && ((mX + mWidth) > (tX + tWidth)))) && (mY-35 <= tY)) {
-                point+= 1
-                ctx.clearRect(0, 0, 100, 30)
-                moveTarget()
-                collision = true
+                point += 1
+                if(point >= 10){
+                    getFinish()
+                } else {
+                    ctx.clearRect(0, 0, 100, 30)
+                    moveTarget()
+                    collision = true
+                }
     }
 }
 
 //Initialisation du jeu 
 let getInit = () => {
     //Canon
-    ctx.drawImage(bg, 0, 0)
     ctx.drawImage(canon, canonX, canonY)
     ctx.drawImage(target, targetX, targetY) 
     ctx.fillText(`Points : ${point}`, 10, 20)   
-    
+    move = true;
 }
 
 

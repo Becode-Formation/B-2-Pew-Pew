@@ -1,4 +1,22 @@
-canvas {
-    border: 1px solid black;
-    margin-top: 10vh;
+
+
+.canvas{
+    &__board{
+        display: block;
+        text-align: center;
+        border: 1px solid black;
+        margin-top: 5vh;
+        margin: 0 auto;
+        margin-top: 5vh
+    }
+
+    &__all{
+        background: url(./img/bg.svg);
+        z-index: 1;
+        position: relative;
+    }
+}
+
+.image {
+    display: none;
 }

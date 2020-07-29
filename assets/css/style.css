@@ -1,12 +1,25 @@
-body {
-  margin: auto;
-  text-align: center; }
-
-canvas {
+.canvas__board {
+  display: block;
+  text-align: center;
   border: 1px solid black;
-  margin-top: 10vh; }
+  margin-top: 5vh;
+  margin: 0 auto;
+  margin-top: 5vh; }
+.canvas__all {
+  background: url(./img/bg.svg);
+  z-index: 1;
+  position: relative; }
 
 .image {
   display: none; }
+
+.btn {
+  position: absolute;
+  top: 45%;
+  left: 48%;
+  border: none;
+  background-color: rgba(42, 172, 30, 0.856);
+  color: white;
+  padding: 3vh 3vw; }
 
 /*# sourceMappingURL=style.css.map */
